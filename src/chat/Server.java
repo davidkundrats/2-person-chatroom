@@ -21,7 +21,10 @@ public class Server {
 				
 			Socket clientSocket = ss.accept(); 
 			PrintWriter clientWriter = new PrintWriter(clientSocket.getOutputStream(), true);
-			clientWriters.add(clientWriter);
+			synchronized(clientWriters) { 
+				clientWriters.add(clientWriter);
+			}
+			
 			
 			Thread clientThread = new Thread (new ClientHandler(clientSocket, clientWriter)); 
 			clientThread.start();
@@ -55,7 +58,10 @@ public class Server {
 				}
 				in.close(); 
 				socket.close(); 
-				clientWriters.remove(writer); 
+				
+				synchronized (clientWriters) {
+                    clientWriters.remove(writer);
+                }
 			}
 			catch (IOException e){ 
 				e.printStackTrace();

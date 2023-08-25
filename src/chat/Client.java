@@ -12,9 +12,9 @@ public class Client {
 		try { 
 
 			System.out.println("Client Started"); 
-			Socket socket = new Socket("localhost", 5900); 
+			Socket socket = new Socket("localhost", 5900); // replace your IP here
 			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-			PrintWriter output = new PrintWriter(socket.getOutputStream()); 
+			PrintWriter output = new PrintWriter(socket.getOutputStream(), true); 
 			BufferedReader incoming = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
 
 			Thread receiveThread = new Thread(new Runnable() {
